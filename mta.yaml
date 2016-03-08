@@ -1,7 +1,7 @@
 _schema-version: 2.0.0
 ID: tinyworld
 description: Tinyworld Tutorial
-version: 0.0.1
+version: 2.0.0
 
 modules:
 - name: tinydb
@@ -16,6 +16,7 @@ modules:
   path: tinyjs
   requires:
     - name: tinydb
+    - name: tiny_uaa
     - name: hdi-container
   provides:
     - name: tinyjs_api
@@ -26,12 +27,18 @@ modules:
   type: html5
   path: tinyui
   requires:
+    - name: tiny_uaa
     - name: tinyjs_api
       group: destinations
       properties:
         name: tinyjs_be
         url: ~{service_url}
+        forwardAuthToken: true
 
 resources:
 - name: hdi-container
   type: com.sap.xs.hdi-container
+- name: tiny_uaa
+  type: com.sap.xs.uaa
+  parameters:
+    path: ./xs-security.json
